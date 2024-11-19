@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Developer Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  </head>
+  <body class="bg-gray-100 font-sans">
+    <div id="app" class="container mx-auto px-4 py-8">
+      <!-- Login Form -->
+      <div
+        id="login-section"
+        class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md"
+      >
+        <h2 class="text-2xl font-bold mb-6 text-center">
+          Developer Portfolio Login
+        </h2>
+        <form id="login-form" class="space-y-4">
+          <div>
+            <label for="username" class="block mb-2">Username</label>
+            <input
+              type="text"
+              id="username"
+              class="w-full px-3 py-2 border rounded-md"
+              required
+            />
+          </div>
+          <div>
+            <label for="password" class="block mb-2">Password</label>
+            <input
+              type="password"
+              id="password"
+              class="w-full px-3 py-2 border rounded-md"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
+          >
+            Login
+          </button>
+        </form>
+        <p id="login-error" class="text-red-500 mt-4 text-center hidden">
+          Invalid credentials
+        </p>
+      </div>
+
+      <!-- Portfolio Section (Hidden by Default) -->
+      <div id="portfolio-section" class="hidden">
+        <div class="max-w-4xl mx-auto">
+          <h1 class="text-3xl font-bold mb-8 text-center">
+            My Developer Portfolio
+          </h1>
+
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Project Cards -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+              <h3 class="text-xl font-semibold mb-4">Web Scraper</h3>
+              <p class="text-gray-600 mb-4">
+                Python-based web scraping tool for extracting data from
+                websites.
+              </p>
+              <div class="flex space-x-2">
+                <span
+                  class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm"
+                  >Python</span
+                >
+                <span
+                  class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm"
+                  >BeautifulSoup</span
+                >
+              </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-md">
+              <h3 class="text-xl font-semibold mb-4">Machine Learning Model</h3>
+              <p class="text-gray-600 mb-4">
+                Predictive model for customer churn using scikit-learn.
+              </p>
+              <div class="flex space-x-2">
+                <span
+                  class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm"
+                  >Python</span
+                >
+                <span
+                  class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm"
+                  >Scikit-learn</span
+                >
+              </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-md">
+              <h3 class="text-xl font-semibold mb-4">Mobile App</h3>
+              <p class="text-gray-600 mb-4">
+                React Native fitness tracking application.
+              </p>
+              <div class="flex space-x-2">
+                <span
+                  class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm"
+                  >React Native</span
+                >
+                <span
+                  class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm"
+                  >Firebase</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 text-center">
+            <button
+              id="logout-btn"
+              class="bg-red-500 text-white px-6 py-2 rounded-md hover:bg-red-600"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Simple authentication mechanism
+      const validCredentials = {
+        username: "luc_girel",
+        // hashed password: 'portfolio2024'
+        password:
+          "c48f4adb3c24825c5ba6c39adfda3d70bd4277bb4fddafb877c686bffbf107f2",
+      };
+
+      document
+        .getElementById("login-form")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+
+          // Hash the password using SHA-256
+          const hashedPassword = CryptoJS.SHA256(password).toString();
+
+          if (
+            username === validCredentials.username &&
+            hashedPassword === validCredentials.password
+          ) {
+            document.getElementById("login-section").classList.add("hidden");
+            document
+              .getElementById("portfolio-section")
+              .classList.remove("hidden");
+          } else {
+            document.getElementById("login-error").classList.remove("hidden");
+          }
+        });
+
+      document
+        .getElementById("logout-btn")
+        .addEventListener("click", function () {
+          document.getElementById("portfolio-section").classList.add("hidden");
+          document.getElementById("login-section").classList.remove("hidden");
+          document.getElementById("login-form").reset();
+          document.getElementById("login-error").classList.add("hidden");
+        });
+    </script>
+  </body>
+</html>
